@@ -1,68 +1,54 @@
-// using CustomExceptions;
-// namespace Models;
+ using CustomExceptions;
+ namespace Models;
 
 
 
-// public class User
-// {
+public class User
+{
+    public string Role {get; set}
+    public string Password {get; set;}
+  //  public string UserName {get; set;}
+    public User()
+    {
+      Role = "";
+      Password = "";
+    }
 
-//    public User(string UserName, string role) 
-//    {
-//       this.Name = UserName="";
-//       this.role = role="";
-//    }
-   
-
-//   private string _name="";
-//   public string Name
-// {
-//        get { return _name;}
-
-//        set
-//        {
-//         if (String.IsNullOrWhiteSpace(value))
-//         {
-//           throw new InputInvalidException("Name must not be empty");
-//         }
-//         else //optional
-//         {
-//           _name = value;
-//         }
-//        }
-
-       
-// }
-
-
+    public User(string UserName)
+    {
+        this.UserName = UserName;
+        Role = "";
+        Password = "";
+    }
     
-//  // public int Id {get;set;}
-//  // public string Name {get; set;} = "";  //this gets rid of the null warnings
-//   public string password {get; set;} = "";
-//   public string role {get; set;} = "";
+  //  public string UserName {get; set;}
+    
+    public User(string UserName,string Password, string Role )
+    {
+       this.UserName = UserName;
+       this.Password = Password;
+       this.Role = Role;
+       
+    }
 
-//   public override string ToString()
-//   {
-//     return $"Name: {this.Name} \nrole: {this.role}";
-//   }
+    private string _userName;
+    
+    public string UserName
+    {
+      get {return _userName}
+      // C# provides the value user is trying to gset this property with as a variable name "value" in the setter
+      set{
+        if(String.IsNullOrWhiteSpace(value))
+        {
+          throw new InputInvalidException("Name must not be empty");
+        }
+        else
+        {
+          _userName = value;
+        }
+      }
+    }
+    
 
-//   public override bool Equals(object? obj)
-//   {
-//       if(obj.GetType() == this.GetType())
-//       {
-//         User usertoCompare = (User) obj;
-//         if(this.Id == usertoCompare.Id && this.Name == usertoCompare.Name )
-//         {
-//            return true;
-//         }
-//         return false;
-//       }
-//       else
-//       {
-//          return false;
-//       }
-
-//   }
-
-// }
-
+}
 
