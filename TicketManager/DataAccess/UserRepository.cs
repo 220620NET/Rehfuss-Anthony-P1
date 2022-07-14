@@ -40,7 +40,7 @@ public class UserRepository : IUserRepository
 
   public User GetUser(string name)
   {
-       User foundUser;
+      // User foundUser;
        SqlConnection conn = _connectionFactory.GetConnection();
        conn.Open();
 

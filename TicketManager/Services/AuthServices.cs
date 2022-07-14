@@ -22,7 +22,7 @@ public class AuthServices
     }
     catch(RecordNotFoundException)
     {
-         Console.WriteLine("WE didn't find the record");
+       //  Console.WriteLine("WE didn't find the record");
          return _repo.AddUser(newUser);
     }
   }
