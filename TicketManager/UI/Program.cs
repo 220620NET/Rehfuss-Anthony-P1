@@ -2,19 +2,11 @@
 
 // See https://aka.ms/new-console-template for more information
 
-using Models;
-using Repository;
-// namespace UI;
-// Console.WriteLine("Hi project one!");
 
-TicketReimbursementRepository postTickets = new TicketReimbursementRepository();
+using UI;
+using Services;
+using DataAccess;
 
-List<Ticket> tickets = postTickets.GetAllTickets();
+new MainMenu(new AuthServices(new UserRepository())).Start();
 
-foreach(Ticket i in tickets)
-{
-  Console.WriteLine(i);
-}
-
-Console.WriteLine("HI");
 

@@ -81,9 +81,9 @@ public User AddUser(User newUserToRegister)
       if(UserTable != null)
       {
         DataRow newUser = UserTable.NewRow();
-        newUser["user_name"] = newUserToRegister.UserName;
-        newUser["pasword"] = newUserToRegister.Password;
-        newUser["role"] = newUserToRegister.Role;
+        newUser["username"] = newUserToRegister.UserName;
+        newUser["password"] = newUserToRegister.Password;
+        newUser["user_role"] = newUserToRegister.Role;
 
         UserTable.Rows.Add(newUser);
 

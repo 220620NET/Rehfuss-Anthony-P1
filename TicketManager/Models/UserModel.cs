@@ -5,7 +5,7 @@
 
 public class User
 {
-    public string Role {get; set}
+    public string Role {get; set;}
     public string Password {get; set;}
   //  public string UserName {get; set;}
     public User()
@@ -35,12 +35,20 @@ public class User
     
     public string UserName
     {
-      get {return _userName}
+      get 
+      {
+        return _userName;
+      }
       // C# provides the value user is trying to gset this property with as a variable name "value" in the setter
-      set{
+      set
+      {
         if(String.IsNullOrWhiteSpace(value))
         {
           throw new InputInvalidException("Name must not be empty");
+        }
+        else if(value.Length == 0 && value.Length >= 100)
+        {
+          throw new InputInvalidException("Name cannot be longer than 100 characters");
         }
         else
         {
@@ -48,7 +56,7 @@ public class User
         }
       }
     }
-    
+  
 
 }
 

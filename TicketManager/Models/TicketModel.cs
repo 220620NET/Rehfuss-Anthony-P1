@@ -39,5 +39,24 @@ public class Ticket
     ", Amount: " + Amount;
   }
 
+  public override bool Equals(object? obj)
+  {
+    if(obj.GetType() == this.GetType())
+    {
+      Ticket ticketToCompare = (Ticket) obj;
+      
+      if(this.Id == ticketToCompare.Id && this.Author == ticketToCompare.Author )
+      {
+         return true;
+      }
+      return false;
+    }
+    else
+    {
+      return false;
+    }
+
+  }
+
 }
 
