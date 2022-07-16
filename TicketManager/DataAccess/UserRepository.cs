@@ -11,7 +11,7 @@ public class UserRepository : IUserRepository
         
         public UserRepository()
         {
-          _connectionFactory = ConnectionFactory.GetInstance();
+          _connectionFactory = ConnectionFactory.GetInstance(File.ReadAllText("../DataAccess/connectionString.txt"));
         }
 
         public List<User> GetAllUsers()
