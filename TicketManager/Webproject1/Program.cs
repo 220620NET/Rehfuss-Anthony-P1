@@ -49,4 +49,20 @@ app.MapGet("/Users", () =>{
   return service.GetAllUsers();
 });
 
+app.MapPost("/register", (User user)=>
+{
+      var scope = app.Services.CreateScope();
+      AuthServices services = scope.ServiceProvider.GetRequiredService<AuthServices>();
+
+      try
+      {
+          services.Register(user);
+          return Results.Created("/register", user);
+      }
+      catch
+      {
+           return Results.Conflict("User with this name already exists");
+      }
+});
+
 app.Run();
