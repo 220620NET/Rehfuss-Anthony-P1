@@ -1,21 +1,25 @@
 using Models;
 using System;
 using System.Data;
-using System.Data.SqlClient;
+using Microsoft.Data.SqlClient;
 
 namespace Repository;
 
 public class TicketReimbursementRepository
 {
-        string connectionString = "Server=tcp:anth.database.windows.net,1433;Initial Catalog=Anth;Persist Security Info=False;User ID=sqluser;Password=p4ssw0rd!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
-
+          private readonly ConnectionFactory _connectionFactory;
+        
+        public TicketReimbursementRepository(ConnectionFactory connectionFactory)
+        {
+          _connectionFactory = connectionFactory;
+        }
     public List<Ticket> GetAllTickets()
     {
        List<Ticket> tickets = new List<Ticket>();
 
-       string sql = "SELECT  * from Pro1.Ticket;";
+       string sql = "SELECT * from Pro1.Ticket4;";
          //datatype to reference the sql command you want to do to a specific connection
-       SqlConnection connection = new SqlConnection(connectionString);
+       SqlConnection connection = _connectionFactory.GetConnection();
 
        SqlCommand command = new SqlCommand(sql, connection);
        try

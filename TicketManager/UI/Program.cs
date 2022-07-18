@@ -7,7 +7,7 @@ using UI;
 using Services;
 using DataAccess;
 
- new MainMenu(new AuthServices(new UserRepository())).Start();
+//  new MainMenu(new AuthServices(new UserRepository())).Start();
 
 // char[] letterGrades = {'A','B','C','D','F'};
 // List<char> grades = new List<char>(letterGrades);

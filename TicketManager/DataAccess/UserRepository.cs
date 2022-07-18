@@ -9,9 +9,9 @@ public class UserRepository : IUserRepository
 {
         private readonly ConnectionFactory _connectionFactory;
         
-        public UserRepository()
+        public UserRepository(ConnectionFactory connectionFactory)
         {
-          _connectionFactory = ConnectionFactory.GetInstance(File.ReadAllText("../DataAccess/connectionString.txt"));
+          _connectionFactory = connectionFactory;
         }
 
         public List<User> GetAllUsers()

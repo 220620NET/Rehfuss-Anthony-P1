@@ -8,10 +8,10 @@ using Microsoft.AspNetCore.Mvc;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.Configure<Microsoft.AspNetCore.Http.Json.JsonOptions>(options =>
-{
-         options.SerializerOptions.PropertyNamingPolicy = null;
-});
+// builder.Services.Configure<Microsoft.AspNetCore.Http.Json.JsonOptions>(options =>
+// {
+//          options.SerializerOptions.PropertyNamingPolicy = null;
+// });
 
 builder.Services.AddSingleton<ConnectionFactory>(ctx => ConnectionFactory.GetInstance(builder.Configuration
 .GetConnectionString("TicketDB")));
@@ -26,6 +26,9 @@ var app = builder.Build();
 
 app.UseSwagger();
 app.UseSwaggerUI();
+
+
+
 
 app.MapGet("/", () => "Hello World!");
 
