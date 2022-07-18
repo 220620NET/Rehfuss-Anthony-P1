@@ -17,5 +17,17 @@ public class UserService
       return _repo.GetAllUsers();
     }
       
+
+    public User GetUser(string name)
+    {
+      return _repo.GetUser(name);
+    }  
+
+    public User AddUser(User user)
+    {
+      return _repo.AddUser(user);
+    }
+
+    
 }
 

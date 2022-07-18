@@ -8,16 +8,15 @@ using Microsoft.AspNetCore.Mvc;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// builder.Services.Configure<Microsoft.AspNetCore.Http.Json.JsonOptions>(options =>
-// {
-//          options.SerializerOptions.PropertyNamingPolicy = null;
-// });
 
 builder.Services.AddSingleton<ConnectionFactory>(ctx => ConnectionFactory.GetInstance(builder.Configuration
 .GetConnectionString("TicketDB")));
 builder.Services.AddScoped<IUserRepository,UserRepository>();
 builder.Services.AddScoped<AuthServices>();
 builder.Services.AddTransient<UserService>();
+
+builder.Services.AddScoped<ITicketRepository,TicketReimbursementRepository>();
+builder.Services.AddScoped<TicketService>();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -67,5 +66,26 @@ app.MapPost("/register", (User user)=>
            return Results.Conflict("User with this name already exists");
       }
 });
+
+app.MapGet("/User",(string user)=>{
+     var scope = app.Services.CreateScope();
+     UserService service = scope.ServiceProvider.GetRequiredService<UserService>();
+
+    // service.GetUser(user);
+     return service.GetUser(user);
+});
+
+
+app.MapGet("/Tickets",()=>
+{
+       var scope = app.Services.CreateScope();
+       TicketService service = scope.ServiceProvider.GetRequiredService<TicketService>();
+
+       return service.GetTickets();
+
+});
+
+
+
 
 app.Run();
