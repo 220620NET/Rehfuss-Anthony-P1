@@ -13,6 +13,14 @@ public interface ITicketRepository
 
   Ticket GetTicket(int id); // ticket_Id in database
 
+  Ticket GetTicketByAuthor(string name);
+
   Ticket AddTicket(Ticket newTicketToRegister);
+
+  Ticket GetByStatus(string status);
+
+  Ticket UpDateTicket(int id, string decision);
+
+
 
 }

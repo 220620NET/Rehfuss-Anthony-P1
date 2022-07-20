@@ -76,6 +76,30 @@ app.MapGet("/User",(string user)=>{
 });
 
 
+app.MapPost("/newTicket", (Ticket ticket)=>
+{
+      var scope = app.Services.CreateScope();
+      TicketService service = scope.ServiceProvider.GetRequiredService<TicketService>();
+
+      try
+      {
+          service.AddTicket(ticket);
+          return Results.Created("/newTicket", ticket);
+      }    
+      catch
+      {
+           return Results.Conflict("Ticket with Id already exists");
+      }
+});
+
+app.MapPost("/updateTicket", (int id, string status) =>
+{
+      var scope = app.Services.CreateScope();
+      TicketService service = scope.ServiceProvider.GetRequiredService<TicketService>();
+     return service.UpDateTicket(id,status);
+     
+});
+
 app.MapGet("/Tickets",()=>
 {
        var scope = app.Services.CreateScope();
@@ -85,7 +109,30 @@ app.MapGet("/Tickets",()=>
 
 });
 
+app.MapPost("/ByStatus",(string status)=>
+{
+    var scope = app.Services.CreateScope();
+    TicketService service = scope.ServiceProvider.GetRequiredService<TicketService>();
 
+    return service.getTicketByStatus(status);
+
+});
+
+
+app.MapPost("/Author",(string name)=>
+{
+       var scope = app.Services.CreateScope();
+       TicketService service = scope.ServiceProvider.GetRequiredService<TicketService>();
+
+       return service.getTicketByAuthor(name);
+
+});
+
+app.MapPost("/TicketId",(int id) =>{
+       var scope = app.Services.CreateScope();
+      TicketService services = scope.ServiceProvider.GetRequiredService<TicketService>();
+      return services.getTicketId(id);
+});
 
 
 app.Run();
