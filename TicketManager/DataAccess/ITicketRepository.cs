@@ -17,7 +17,7 @@ public interface ITicketRepository
 
   Ticket AddTicket(Ticket newTicketToRegister);
 
-  Ticket GetByStatus(string status);
+  List<Ticket> GetTicketsByStatus(string status);
 
   Ticket UpDateTicket(int id, string decision);
 

@@ -75,6 +75,15 @@ app.MapGet("/User",(string user)=>{
      return service.GetUser(user);
 });
 
+app.MapPost("Login",(string name, string login)=>{
+   var scope = app.Services.CreateScope();
+     UserService service = scope.ServiceProvider.GetRequiredService<UserService>();
+
+     return service.Login(name,login);
+
+
+} );
+
 
 app.MapPost("/newTicket", (Ticket ticket)=>
 {
@@ -109,12 +118,12 @@ app.MapGet("/Tickets",()=>
 
 });
 
-app.MapPost("/ByStatus",(string status)=>
+app.MapPost("/TicketsByStatus",(string status)=>
 {
     var scope = app.Services.CreateScope();
     TicketService service = scope.ServiceProvider.GetRequiredService<TicketService>();
 
-    return service.getTicketByStatus(status);
+    return service.getTicketsByStatus(status);
 
 });
 
@@ -133,6 +142,8 @@ app.MapPost("/TicketId",(int id) =>{
       TicketService services = scope.ServiceProvider.GetRequiredService<TicketService>();
       return services.getTicketId(id);
 });
+
+
 
 
 app.Run();

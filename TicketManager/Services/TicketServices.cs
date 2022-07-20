@@ -27,9 +27,9 @@ public class TicketService
       return _repo.GetTicketByAuthor(name);
     }
 
-    public Ticket getTicketByStatus(string status)
+    public List<Ticket> getTicketsByStatus(string status)
     {
-      return _repo.GetByStatus(status);
+      return _repo.GetTicketsByStatus(status);
     }
 
     public Ticket AddTicket(Ticket newTicket)

@@ -11,5 +11,7 @@ public interface IUserRepository
 
   User AddUser(User newUserToRegister);
 
+  User Login(string name, string password);
+
 
 }

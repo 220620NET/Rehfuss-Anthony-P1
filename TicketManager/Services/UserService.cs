@@ -28,6 +28,11 @@ public class UserService
       return _repo.AddUser(user);
     }
 
+    public User Login(string name, string password)
+    {
+      return _repo.Login(name, password);
+    }
+
     
 }
 

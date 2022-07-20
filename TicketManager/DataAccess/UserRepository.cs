@@ -97,4 +97,29 @@ public User AddUser(User newUserToRegister)
       return newUserToRegister;
 }
 
+
+public User Login(string name, string password)
+  {
+      // User foundUser;
+       SqlConnection conn = _connectionFactory.GetConnection();
+       conn.Open();
+
+       SqlCommand cmd = new SqlCommand("Select * From Pro1.Users where username = @name AND password = @password", conn);
+
+       cmd.Parameters.AddWithValue("@name", name);
+       cmd.Parameters.AddWithValue("@password",password);
+       SqlDataReader reader = cmd.ExecuteReader();
+
+       while(reader.Read())
+       {
+             return new User
+             {
+              UserName = (string)reader["username"],
+                  Password = (string)reader["password"],
+                  Role = (string)reader["user_role"]
+            };
+       }
+       throw new RecordNotFoundException("Could not find such a name");
+  }
+
 }
