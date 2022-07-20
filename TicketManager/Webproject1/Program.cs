@@ -128,12 +128,12 @@ app.MapPost("/TicketsByStatus",(string status)=>
 });
 
 
-app.MapPost("/Author",(string name)=>
+app.MapPost("/TicketBysAuthor",(string author)=>
 {
        var scope = app.Services.CreateScope();
        TicketService service = scope.ServiceProvider.GetRequiredService<TicketService>();
 
-       return service.getTicketByAuthor(name);
+       return service.getTicketsByAuthor(author);
 
 });
 

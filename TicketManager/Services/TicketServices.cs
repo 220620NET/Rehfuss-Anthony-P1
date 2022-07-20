@@ -22,9 +22,9 @@ public class TicketService
         return _repo.GetTicket(id);
     }
 
-    public Ticket getTicketByAuthor(string name)
+    public List<Ticket> getTicketsByAuthor(string name)
     {
-      return _repo.GetTicketByAuthor(name);
+      return _repo.GetTicketsByAuthor(name);
     }
 
     public List<Ticket> getTicketsByStatus(string status)

@@ -99,7 +99,43 @@ public class TicketReimbursementRepository : ITicketRepository
 
 
 
+   public List<Ticket> GetTicketsByAuthor(string author)
+      {
+        List<Ticket> tickets = new List<Ticket>();
+        SqlConnection conn = _connectionFactory.GetConnection();
 
+        conn.Open();
+        
+          SqlCommand cmd = new SqlCommand("Select * from Pro1.Ticket4 where author_fk = @author", conn);
+
+          cmd.Parameters.AddWithValue("@author", author);
+
+
+
+     //   SqlCommand cmd = new SqlCommand("Select * from Pro1.Ticket4 where status = @status",conn);// SELECT  * from Pro1.Ticket4;
+        SqlDataReader reader = cmd.ExecuteReader();
+        
+
+        while(reader.Read())
+        {
+          tickets.Add(new Ticket
+          {
+            Id = (int)reader["ticket_Id"],
+            Author = (string)reader["author_fk"],
+            Resolover = (string) reader["resolver_fk"],
+            Description = (string)reader["description"],
+            Status = (string)reader["status"],
+            Amount = (decimal)reader["amount"]
+           
+            
+          });
+        
+        }
+          reader.Close();
+          conn.Close();
+
+          return tickets;
+      }
 
 
      public Ticket GetTicket(string name)
@@ -186,34 +222,34 @@ public class TicketReimbursementRepository : ITicketRepository
       
      }
 
-       public Ticket GetByStatus(string status)
-     {
-      // throw new NotImplementedException();
-      SqlConnection conn = _connectionFactory.GetConnection();
-          conn.Open();
+    //    public Ticket GetByStatus(string status)
+    //  {
+    //   // throw new NotImplementedException();
+    //   SqlConnection conn = _connectionFactory.GetConnection();
+    //       conn.Open();
 
-          SqlCommand cmd = new SqlCommand("Select * from Pro1.Ticket4 where status = @status", conn);
+    //       SqlCommand cmd = new SqlCommand("Select * from Pro1.Ticket4 where status = @status", conn);
 
-          cmd.Parameters.AddWithValue("@status", status);
+    //       cmd.Parameters.AddWithValue("@status", status);
         
 
-          SqlDataReader reader = cmd.ExecuteReader();
+    //       SqlDataReader reader = cmd.ExecuteReader();
 
-          while(reader.Read())
-          {
-            return new Ticket
-            {
-            Id = (int)reader["ticket_Id"],
-            Author = (string)reader["author_fk"],
-            Resolover = (string) reader["resolver_fk"],
-            Description = (string)reader["description"],
-            Status = (string)reader["status"],
-            Amount = (decimal)reader["amount"]
-            };
-          }
-          throw new RecordNotFoundException("Could not find the ticket with that status");
+    //       while(reader.Read())
+    //       {
+    //         return new Ticket
+    //         {
+    //         Id = (int)reader["ticket_Id"],
+    //         Author = (string)reader["author_fk"],
+    //         Resolover = (string) reader["resolver_fk"],
+    //         Description = (string)reader["description"],
+    //         Status = (string)reader["status"],
+    //         Amount = (decimal)reader["amount"]
+    //         };
+    //       }
+    //       throw new RecordNotFoundException("Could not find the ticket with that status");
       
-     }
+    //  }
 
      public Ticket AddTicket(Ticket newTicketToRegister)
      {
@@ -255,51 +291,47 @@ public class TicketReimbursementRepository : ITicketRepository
 
         public Ticket UpDateTicket(int Id, string status)
      {
-            
-           
-             DataSet ticketSet = new DataSet();
 
-            string sqlUpdateQuery = "UPDATE Pro1.Ticket4 SET status = @status WHERE ticket_Id = @Id;";
-            SqlConnection conn = _connectionFactory.GetConnection();
+          string sqlUpdateQuery = "UPDATE Pro1.Ticket4 SET status = @status WHERE ticket_Id = @Id;";
+          SqlConnection conn = _connectionFactory.GetConnection();
           conn.Open();
-
-           SqlDataAdapter adapter = new SqlDataAdapter();
 
           SqlCommand cmd = new SqlCommand(sqlUpdateQuery, conn);
           
           cmd.Parameters.Add("@Id", SqlDbType.Int).Value = Id;
           cmd.Parameters.Add("@status",SqlDbType.VarChar, 10).Value=status;
           
-          adapter.UpdateCommand = cmd;
+           int rowsAffected = cmd.ExecuteNonQuery();
 
-           SqlDataReader reader = cmd.ExecuteReader();
-        
-
+           if(rowsAffected == 0)
+           {
+              throw new RecordNotFoundException("Could not find the ticket with that ticket");
+           }
+           
+          
+        SqlCommand cmd2 = new SqlCommand("SELECT * from Pro1.Ticket4 where ticket_id = @Id",conn);
+        cmd2.Parameters.Add("@Id", SqlDbType.Int).Value = Id;
+        SqlDataReader reader = cmd2.ExecuteReader();
+        Ticket updatedTicket = new Ticket();
         while(reader.Read())
         {
-          return new Ticket
+          updatedTicket = new Ticket// new Ticket
           {
-            Id = (int)reader["ticket_Id"],
-            Author = (string)reader["author_fk"],
-            Resolover = (string) reader["resolver_fk"],
+           Id = (int)reader["ticket_Id"],
+           Author = (string)reader["author_fk"],
+           Resolover = (string) reader["resolver_fk"],
             Description = (string)reader["description"],
             Status = (string)reader["status"],
             Amount = (decimal)reader["amount"]
-           
-            
-          };
+           };
         
         }
-       //  throw new RecordNotFoundException("Could not find the ticket with that author");
+        
           reader.Close();
           conn.Close();
-      return new Ticket();
+      return updatedTicket;
         
           
-         
-        
-        
-      
      }
     
 
